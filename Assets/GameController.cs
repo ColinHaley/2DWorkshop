@@ -40,19 +40,54 @@ public class GameController : MonoBehaviour
         foreach (string enumName in enumNames)
         {
             BinaryFormatter formatter = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/" + enumName + ".dat", FileMode.Create);
-            
+            FileStream file = File.Create(Application.persistentDataPath + "/" + enumName + ".dat");
+
+            SaveData data = new SaveData();
+
+            //Set properties right here
+
+            formatter.Serialize(file, data);
+            file.Close();
         }
     }
 
-    public void Save(string test)
+    public void Save(DataFiles dataFile)
     {
-        //Specific save file. How do I get the name of the enum specifically instead of looping?
-        
+        //Specific save file. 
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/" + dataFile + ".dat");
 
+        SaveData data = new SaveData();
+
+        //Set properties right here
+
+        formatter.Serialize(file, data);
+        file.Close();
+    }
+
+    public void Load()
+    {
+        // Full Load
+        var enumNames = Enum.GetNames(typeof(DataFiles));
+        foreach (string enumName in enumNames)
+        {
+            if (File.Exists(Application.persistentDataPath + "/" + enumName + ".dat"))
+            {
+                
+                BinaryFormatter formatter = new BinaryFormatter();
+                FileStream file = File.Open(Application.persistentDataPath + "/" + enumName + ".dat", FileMode.Open);
+
+                SaveData data = (SaveData) formatter.Deserialize(file);
+                file.Close();
+
+                //set properties
+            }
+        }
     }
 }
 
+
+[Serializable]
 class SaveData
 {
     //Placeholder for data to save.
