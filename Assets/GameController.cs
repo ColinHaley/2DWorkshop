@@ -1,15 +1,21 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameController : MonoBehaviour {
+public class GameController : MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    public static GameController Controller;
+
+    void Awake()
+    {
+        if (Controller == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            Controller = this;
+        }
+        else if (Controller != this)
+        {
+            Destroy(gameObject);
+        }
+    }
 }
