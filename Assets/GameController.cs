@@ -29,6 +29,8 @@ public class GameController : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        Save();
     }
 
     public void Save()
@@ -38,14 +40,15 @@ public class GameController : MonoBehaviour
         foreach (string enumName in enumNames)
         {
             BinaryFormatter formatter = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + enumName, FileMode.Create);
+            FileStream file = File.Open(Application.persistentDataPath + "/" + enumName + ".dat", FileMode.Create);
+            
         }
     }
 
     public void Save(string test)
     {
         //Specific save file. How do I get the name of the enum specifically instead of looping?
-        var enumName = Enum.GetName(typeof (data));
+        
 
     }
 }
