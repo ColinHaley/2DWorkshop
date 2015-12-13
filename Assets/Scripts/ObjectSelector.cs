@@ -23,7 +23,7 @@ public class ObjectSelector : MonoBehaviour
     private bool _inMotion;
 
     private float _moveSpeed = 1.0f;
-    private float _turnSpeed = 0.5f;
+    public float _turnSpeed = 100.5f;
     void Awake()
     {
         _myTransformMain = transform;
@@ -48,29 +48,24 @@ public class ObjectSelector : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+        
         if (_selectionRender.enabled)
 	    {
-	        
-            
+            _myTransformSelection.transform.Rotate(new Vector3(0, 0, 1), 0.5f);
             
             if (_moveList.Count != 0)
 	        {
 	            if (transform.position == _moveList[0])
 	            {
 	                _moveList.RemoveAt(0);
-	                transform.rotation = Quaternion.identity;
-                    return;
+	                return;
 	            }
 	            if (transform.position != _moveList[0])
 	            {
-                    _myTransformSelection.transform.Rotate(new Vector3(0, 0, 1), Time.deltaTime * 0.5f);
-                    
-                    Vector3 dir = _moveList[0] - transform.position;
-                    float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-
-                    var rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+                    var rotation = Quaternion.LookRotation(_moveList[0]);
+                    rotation.y = 0;
+                    rotation.x = 0;
                     transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * _turnSpeed);
-                    transform.Translate((Vector3.right) * Time.deltaTime);
                     
                     //works
                     float step = _moveSpeed*Time.deltaTime;
