@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ObjectSelector : MonoBehaviour
 {
@@ -18,6 +19,11 @@ public class ObjectSelector : MonoBehaviour
     private Transform _myTransformTitle;
     private Transform _myTransformSelection;
 
+    public List<Vector3> _moveList = new List<Vector3>();
+    private bool _inMotion;
+
+    private float _moveSpeed = 1.0f;
+
     void Awake()
     {
         _myTransformMain = transform;
@@ -31,8 +37,6 @@ public class ObjectSelector : MonoBehaviour
         _selectionRender.enabled = false;
         _selectionRender.material = Highlight00;
 
-        //test
-        
     }
 
 
@@ -42,18 +46,42 @@ public class ObjectSelector : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	    if (_selectionRender.enabled)
+	void Update ()
+	{
+        if (_selectionRender.enabled)
 	    {
 	        _myTransformSelection.transform.Rotate(new Vector3(0,0,1),Time.deltaTime * 15);
+	        if (_moveList.Count != 0)
+	        {
+	            if (transform.position == _moveList[0])
+	            {
+	                _moveList.RemoveAt(0);
+	                return;
+	            }
+	            if (transform.position != _moveList[0])
+	            {
+	                float step = _moveSpeed*Time.deltaTime;
+	                transform.position = Vector3.MoveTowards(transform.position, _moveList[0], step);
+	            }
+	        }
 	    }
+
+	    if (Input.GetMouseButtonDown(1))
+	    {
+	        if (_selectionRender.enabled){
+                var dest = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                dest.z = 0;
+                _moveList.Add(dest);   
+	        }
+	        
+	    }
+	    
 	}
 
-    void OnMouseEnter()
+    private void OnMouseEnter()
     {
         _titleEnabledByMouse = true;
         CustomTitleEnable();
-        print("Mouse Entered");
     }
 
     void OnMouseExit()
@@ -84,7 +112,8 @@ public class ObjectSelector : MonoBehaviour
 
     void OnMouseDown()
     {
-        _selectionRender.enabled = true;
+        if (Input.GetMouseButton(0))
+            _selectionRender.enabled = true;
     }
 
 }
