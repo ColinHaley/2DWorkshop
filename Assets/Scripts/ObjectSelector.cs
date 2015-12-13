@@ -43,11 +43,6 @@ public class ObjectSelector : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-	    if (Input.GetMouseButton(0))
-	    {
-	        _selectionRender.enabled = true;
-	    }
-
 	    if (_selectionRender.enabled)
 	    {
 	        _myTransformSelection.transform.Rotate(new Vector3(0,0,1),Time.deltaTime * 15);
