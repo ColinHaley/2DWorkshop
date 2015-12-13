@@ -31,6 +31,7 @@ public class ObjectSelector : MonoBehaviour
         _selectionRender.enabled = false;
         _selectionRender.material = Highlight00;
 
+        //test
         
     }
 
