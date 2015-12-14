@@ -5,9 +5,13 @@ public class Unit : MonoBehaviour
 {
 
     public bool Selected = false;
-    private Renderer _renderer = Camera.main.GetComponent<Renderer>();
+    private Renderer _renderer;
 	// Update is called once per frame
-    private void Update()
+    void Awake()
+    {
+        _renderer = Camera.main.GetComponent<Renderer>();
+    }
+    void Update()
     {
         if (_renderer.isVisible && Input.GetMouseButtonUp(0))
         {
@@ -17,11 +21,7 @@ public class Unit : MonoBehaviour
 
         }
 
-        if (Selected)
-            _renderer.material.color = Color.red;
-        else
-            _renderer.material.color = Color.white;
-
-
-}
+        _renderer.material.color = Selected ? Color.red : Color.white;
+        //test
+    }
 }

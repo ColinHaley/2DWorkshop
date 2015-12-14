@@ -45,4 +45,13 @@ public class CameraOperator : MonoBehaviour
     {
         CheckCamera();
     }
+
+    void OnGUI()
+    {
+        if (_startClick != -Vector3.one)
+        {
+            GUI.color = new Color(1,1,1,0.5f);
+            GUI.DrawTexture(Selection,SelectionHighlight);
+        }
+    }
 }
