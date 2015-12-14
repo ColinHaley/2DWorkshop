@@ -62,15 +62,17 @@ public class ObjectSelector : MonoBehaviour
 	            }
 	            if (transform.position != _moveList[0])
 	            {
+                    /*
                     var rotation = Quaternion.LookRotation(_moveList[0]);
                     rotation.y = 0;
                     rotation.x = 0;
                     transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * _turnSpeed);
-                    
+                    */
                     //works
                     float step = _moveSpeed*Time.deltaTime;
 	                transform.position = Vector3.MoveTowards(transform.position, _moveList[0], step);
 	                Debug.DrawLine(transform.position, _moveList[0], Color.cyan);
+                    
 	            }
 	        }
 	    }
@@ -84,7 +86,7 @@ public class ObjectSelector : MonoBehaviour
 	        }
 	        
 	    }
-	    
+
 	}
 
     private void OnMouseEnter()
