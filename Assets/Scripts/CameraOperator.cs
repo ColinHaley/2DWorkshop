@@ -8,7 +8,7 @@ public class CameraOperator : MonoBehaviour
     public static Rect Selection = new Rect(0,0,0,0);
     private Vector3 _startClick = -Vector3.one;
 
-    void checkCamera()
+    void CheckCamera()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -29,10 +29,20 @@ public class CameraOperator : MonoBehaviour
 
             _startClick = -Vector3.one;
         }
+        if (Input.GetMouseButton(0))
+        {
+            Selection = new Rect(_startClick.x, InvertYCoordinate(_startClick.y), Input.mousePosition.x - _startClick.x, InvertYCoordinate(Input.mousePosition.y) - InvertYCoordinate(_startClick.y));
+        }
+    
+    }
+
+    public static float InvertYCoordinate(float y)
+    {
+        return Screen.height - y;
     }
     
     void Update ()
     {
-        checkCamera();
+        CheckCamera();
     }
 }
