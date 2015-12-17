@@ -7,6 +7,7 @@ public class CameraOperator : MonoBehaviour
     public Texture2D SelectionHighlight;
     public static Rect Selection = new Rect(0,0,0,0);
     private Vector3 _startClick = -Vector3.one;
+    public Renderer renderer = Camera.main.GetComponent<Renderer>();
 
     void CheckCamera()
     {
