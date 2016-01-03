@@ -30,23 +30,23 @@ public class UserInput : MonoBehaviour
         Vector3 movement = new Vector3(0, 0, 0);
 
         //horizontal camera movement
-        if (xpos >= 0 && xpos < ResourceManager.ScrollWidth)
+        if (xpos >= 0 && xpos < ResourceManager.ScrollWidth || Input.GetKey(KeyCode.A))
         {
-            movement.x -= ResourceManager.ScrollSpeed;
+            movement.x -= ResourceManager.HorizontalScrollSpeed;
         }
-        else if (xpos <= Screen.width && xpos > Screen.width - ResourceManager.ScrollWidth)
+        else if (xpos <= Screen.width && xpos > Screen.width - ResourceManager.ScrollWidth || Input.GetKey(KeyCode.D))
         {
-            movement.x += ResourceManager.ScrollSpeed;
+            movement.x += ResourceManager.HorizontalScrollSpeed;
         }
 
         //vertical camera movement
-        if (ypos >= 0 && ypos < ResourceManager.ScrollWidth)
+        if (ypos >= 0 && ypos < ResourceManager.ScrollWidth || Input.GetKey(KeyCode.S))
         {
-            movement.z -= ResourceManager.ScrollSpeed;
+            movement.z -= ResourceManager.HorizontalScrollSpeed;
         }
-        else if (ypos <= Screen.height && ypos > Screen.height - ResourceManager.ScrollWidth)
+        else if (ypos <= Screen.height && ypos > Screen.height - ResourceManager.ScrollWidth || Input.GetKey(KeyCode.W))
         {
-            movement.z += ResourceManager.ScrollSpeed;
+            movement.z += ResourceManager.HorizontalScrollSpeed;
         }
 
         //make sure movement is in the direction the camera is pointing
@@ -55,7 +55,7 @@ public class UserInput : MonoBehaviour
         movement.y = 0;
 
         //away from ground movement
-        movement.y -= ResourceManager.ScrollSpeed * Input.GetAxis("Mouse ScrollWheel");
+        movement.y -= ResourceManager.VerticalScrollSpeed * Input.GetAxis("Mouse ScrollWheel");
 
         //calculate desired camera position based on received input
         Vector3 origin = Camera.main.transform.position;
@@ -77,7 +77,7 @@ public class UserInput : MonoBehaviour
         //if a change in position is detected perform the necessary update
         if (destination != origin)
         {
-            Camera.main.transform.position = Vector3.MoveTowards(origin, destination, Time.deltaTime * ResourceManager.ScrollSpeed);
+            Camera.main.transform.position = Vector3.MoveTowards(origin, destination, Time.deltaTime * ResourceManager.HorizontalScrollSpeed);
         }
     }
 
