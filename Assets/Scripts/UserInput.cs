@@ -16,7 +16,7 @@ public class UserInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player && player.human)
+        if (player && player.Human)
         {
             MoveCamera();
             RotateCamera();
